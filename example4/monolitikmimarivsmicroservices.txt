@@ -1,0 +1,63 @@
+
+---- ## Monolith ve microservice mimarisini karşılaştıran bir yazı yazın.
+
+    -- Monolith mimari
+
+Monolitik mimari aslına gündelik yaptığımız projelerimizde çok fazla kullanıyoruz ama farkında değiliz.
+Monolitik mimari, bir yazılım programının tasarımı için birleşik modeldir.
+Monolitik uygulamalar, birden çok ilgili taskı yerine getirmek için tasarlanmıştır.
+Bunlar, genellikle birbirine sıkı sıkıya bağlı birkaç işlevi kapsayan karmaşık uygulamalardır.
+
+Sistem şöyle çalışır,
+
+İstekleri sunucuya atan bir client var. Bu sunucu bir veritabanına bağlıdır.
+Sunucu üzerinde çalışan projemiz gelen istekleri, bu veriyi verebilmesi için veritabanına gidiyor.
+Bizlere ekranda attığımız istek ne ise onu getiriyor.
+Örneğin bir video izlemek istediğimizde, bir arama yaptımızda vs. İşte bu kullandığımız aslında monolitik mimaridir.
+
+Monolitik mimaride sunucuda 3 katman vardır.
+
+Data Access
+Business
+Presentation katmanı
+Presentation Layer: Son kullanıcının gördüğü katmandır. User interface aslında. Client’ın gördüğü katmandır.
+
+Business Layer: Mantıksal işlemlerin yapıldığı katmandır. Routingleri yaptığımız yerdir.
+Örnegin maaş hesaplamaları, veri analizi modellemesi veya siparişin farklı aşamalardan geçirilmesi gibi iş akışı olabilir.
+Kodları yazdığımız bölüm diyebiliriz.
+
+Data Access Layer: Aslında business katmanında bir id parametresi aşan bir metodumuz olsun.
+Bu id ye ait ürünü getirmesi için data Access katmanında bu veritabanına bu istek atılıyor ve veri getiriliyor.
+Getirilen veri presentation layer da kullanıcıya gösteriliyor.
+
+Monolitik Mimari Avantajları : Geliştirilmesi, test edilmesi ve deployment'ı kolay.
+
+Monolitik Mimari Dezavantajları : Proje büyüdükçe bakımı zorlaşır. Uygulamanın boyutu başlama süresini yavaşlatır
+Değişiklik yapmak zordur. Ölçeklenebilirliği(Scaleable) düşüktür. Tüm proje genelinde yapılır.
+
+
+
+    -- Mikroservisler Mimarisi
+
+Mikro servisler, yazılımın iyi tanımlanmış API'ler üzerinden iletişim kuran küçük bağımsız servislerden oluştuğu yazılım geliştirmeye yönelik mimari bir yaklaşımdır.
+Bu servisler küçük, bağımsız ekiplere aittir. Aslında her bir servis kendine ait bir dünyada çalışır.
+Her bir servis kendine ait sunucuda çalışır.
+Kendine ait veritabanı vardır.
+Sadece bir küçük işi çok iyi yapmalıdır felsefesine göre tek bir sunucu üzerinde tek bir modül olarak çalışır .
+Stateless yapılardır.
+
+Mikroservisler Mimarisi Avantajları
+Çok dilli mimari
+Kolay ölçeklenebilirler
+Yenilik yapması daha kolay
+
+Mikroservisler Mimarisi Dezavantajları
+Implemantasyon kolay değildir
+Debug kolay değildir
+Hata yönetimi kolay değildir
+
+
+Peki her biri farklı sunucu olursa diğer modüllerle nasıl iletişime geçilecek sorusu akıllara gelir. Api Gateway üzerinden dış ve iç dünya ile iletişime geçerler.
+Api Gateway nedir?
+Gateway bir geçit, kapı anlamına gelir. API gateway, bir istemci ile backend servisleri koleksiyonu arasında yer alan bir API yönetim aracıdır.
+Bir API gateway, tüm uygulama programlama arabirimi (API) çağrılarını kabul etmek, bunları yerine getirmek için gereken çeşitli servisleri toplamak ve uygun sonucu döndürmek için bir ters proxy görevi görür.
